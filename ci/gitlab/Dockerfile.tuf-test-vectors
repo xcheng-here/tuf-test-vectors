@@ -1,0 +1,69 @@
+FROM ubuntu:bionic
+LABEL Description="tuf-test-vector testing dockerfile for Ubuntu Bionic"
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# It is important to run these in the same RUN command, because otherwise
+# Docker layer caching breaks us
+RUN apt-get update && apt-get -y install --no-install-suggests --no-install-recommends \
+  apt-transport-https \
+  asn1c \
+  awscli \
+  bison \
+  ccache \
+  clang-format-6.0 \
+  cmake \
+  curl \
+  e2fslibs-dev \
+  fiu-utils \
+  jq \
+  lcov \
+  libarchive-dev \
+  libboost-dev \
+  libboost-log-dev \
+  libboost-program-options-dev \
+  libboost-system-dev \
+  libboost-test-dev \
+  libboost-thread-dev \
+  libcurl4-openssl-dev \
+  libengine-pkcs11-openssl \
+  libexpat1-dev \
+  libffi-dev \
+  libfiu-dev \
+  libfuse-dev \
+  libglib2.0-dev \
+  libgpgme11-dev \
+  libgtest-dev \
+  liblzma-dev \
+  libp11-3 \
+  libp11-dev \
+  libsodium-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  libtool \
+  lshw \
+  make \
+  ninja-build \
+  opensc \
+  net-tools \
+  pkg-config \
+  psmisc \
+  python3-dev \
+  python3-gi \
+  python3-openssl \
+  python3-pip \
+  python3-venv \
+  python3-setuptools \
+  python3-wheel \
+  python3-pytest \
+  softhsm2 \
+  sqlite3 \
+  valgrind \
+  wget \
+  zip
+
+RUN pip3 install pip-tools virtualenv
+RUN useradd testuser
+
+ADD . /tuf-test-vectors
+WORKDIR /tuf-test-vectors
